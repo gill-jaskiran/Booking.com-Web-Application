@@ -13,7 +13,7 @@ namespace WebApplication4.Models
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
-        public string Email { get; set; } // Changed from GuestEmail to Email
+        public string Email { get; set; } 
 
         [Required(ErrorMessage = "Location is required")]
         public string Location { get; set; }
@@ -26,7 +26,6 @@ namespace WebApplication4.Models
         [DataType(DataType.Date)]
         public DateTime ArrivalDate { get; set; }
 
-        // Add Destination property
         [Required(ErrorMessage = "Destination is required")]
         public string Destination { get; set; }
     }

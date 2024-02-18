@@ -9,7 +9,6 @@
         public string Destination { get; set; }
         public DateTime DepartureTime { get; set; }
         public DateTime ArrivalTime { get; set; }
-        // Add more properties as needed
 
 
     }
