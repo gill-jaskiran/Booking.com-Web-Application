@@ -18,16 +18,13 @@ namespace WebApplication4.Controllers
             return View();
         }
 
-       
-            [HttpPost]
-     
-     
-            public ActionResult BookFlight(FlightBookingModel model)
-            {
-                // Save booking details or send confirmation email here
-                return RedirectToAction("BookingConfirmation", "Home", model);
-            }
-        
+        [HttpPost]
+        public ActionResult BookFlight(FlightBookingModel model)
+        {
+            // Save booking details or send confirmation email here
+            return RedirectToAction("BookingConfirmation", "Home", model);
+        }
+
 
         public class FlightBookingModel
         {
