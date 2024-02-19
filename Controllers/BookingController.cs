@@ -57,5 +57,46 @@ namespace WebApplication4.Controllers
             return View(model);
         }
 
+        public ActionResult Hotel()
+        {
+            ViewBag.Provinces = new SelectList(new[]
+            {
+        "Alberta", "British Columbia", "Manitoba", "New Brunswick",
+        "Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island",
+        "Quebec", "Saskatchewan"
+    });
+
+            ViewBag.Hotels = new SelectList(new[]
+            {
+        "Confort Inn", "Best Western", "Marriott", "Hilton"
+    });
+
+            ViewBag.Guests = new SelectList(new[]
+            {
+        "1", "2", "3", "4"
+    });
+
+            return View("Hotel"); // Pass the model and ViewBag data to the view
+        }
+
+
+
+        [HttpPost]
+        public ActionResult BookHotel(HotelBookingModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Here you would typically handle the submission (e.g., save to database, send email) and then redirect to the confirmation page
+                return RedirectToAction("HotelConfirmation", "Booking", model);
+            }
+
+            // If model state is not valid, return to the hotel booking page with validation errors
+            return View("Hotel", model);
+        }
+
+        public ActionResult HotelConfirmation(HotelBookingModel model)
+        {
+            return View(model);
+        }
     }
 }

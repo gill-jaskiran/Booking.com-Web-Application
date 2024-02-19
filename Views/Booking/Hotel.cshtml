@@ -1,0 +1,54 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model WebApplication4.Models.HotelBookingModel
+
+@{
+    ViewData["Title"] = "Hotel Booking";
+}
+
+<h2>Hotel Booking</h2>
+@using (Html.BeginForm("BookHotel", "Booking", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label" })
+        @Html.DropDownListFor(model => model.Location, ViewBag.Provinces as SelectList, "Select Location", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Hotel, htmlAttributes: new { @class = "control-label" })
+        @Html.DropDownListFor(model => model.Hotel, ViewBag.Hotels as SelectList, "Select Hotel", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Hotel, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GuestsPerRoom, htmlAttributes: new { @class = "control-label" })
+        @Html.DropDownListFor(model => model.GuestsPerRoom, ViewBag.Guests as SelectList, "Select Guests", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.GuestsPerRoom, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+}

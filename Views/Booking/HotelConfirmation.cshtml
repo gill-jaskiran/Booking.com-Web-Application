@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model WebApplication4.Models.HotelBookingModel
+
+@{
+    ViewData["Title"] = "Hotel Booking Confirmation";
+}
+
+<h2>Hotel Booking Confirmation</h2>
+<p>Dear @Model.FirstName @Model.LastName, your hotel has been booked successfully. Check your email for further details.</p>
+<h3>Booking Details:</h3>
+<p>First Name: @Model.FirstName</p>
+<p>Last Name: @Model.LastName</p>
+<p>Email: @Model.Email</p>
+<p>Location: @Model.Location</p>
+<p>Hotel: @Model.Hotel</p>
+<p>Guests Per Room: @Model.GuestsPerRoom</p>
