@@ -1,12 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApplication4.Models;
+using WebApplication4.Data; 
 
 namespace WebApplication4.Controllers
 {
     public class BookingController : Controller
     {
+        private readonly AppDbContext _db;
 
+        public BookingController(AppDbContext db)
+        {
+
+            _db = db;
+
+        }
         public ActionResult Flight()
         {
             ViewBag.Provinces = new SelectList(new[]
@@ -21,18 +29,23 @@ namespace WebApplication4.Controllers
         [HttpPost]
         public ActionResult BookFlight(FlightBookingModel model)
         {
-            return RedirectToAction("BookingConfirmation", "Home", model);
-        }
+            if (ModelState.IsValid)
+            {
+      
+                model.Location = Request.Form["Location"].ToString();
 
+               
 
-        public class FlightBookingModel
-        {
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public string Email { get; set; }
-            public string Destination { get; set; }
-            public DateTime DepartureDate { get; set; }
-            public DateTime ArrivalDate { get; set; }
+                return RedirectToAction("BookingConfirmation", "Home", model);
+            }
+
+            ViewBag.Provinces = new SelectList(new[]
+            {
+                "Alberta", "British Columbia", "Manitoba", "New Brunswick",
+                "Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island",
+                "Quebec", "Saskatchewan"
+            });
+            return View("Flight", model);
         }
 
         public ActionResult CarRental()
@@ -49,7 +62,20 @@ namespace WebApplication4.Controllers
         [HttpPost]
         public ActionResult RentCar(CarRentalModel model)
         {
-            return RedirectToAction("CarRentalConfirmation", "Booking", model);
+            if (ModelState.IsValid)
+            {
+             
+
+                return RedirectToAction("CarRentalConfirmation", "Booking", model);
+            }
+
+            ViewBag.CarModels = new SelectList(new[]
+            {
+                "BMW", "Tesla Model X", "Toyota", "Honda Civic", "Honda Accord", "Ford F150", "Bentley",
+                "Nissan Altima", "Hyundai", "Acura","Kia", "Subaru",
+                "Volkswagen", "Mazda"
+            });
+            return View("CarRental", model);
         }
 
         public ActionResult CarRentalConfirmation(CarRentalModel model)
@@ -61,36 +87,50 @@ namespace WebApplication4.Controllers
         {
             ViewBag.Provinces = new SelectList(new[]
             {
-        "Alberta", "British Columbia", "Manitoba", "New Brunswick",
-        "Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island",
-        "Quebec", "Saskatchewan"
-    });
+                "Alberta", "British Columbia", "Manitoba", "New Brunswick",
+                "Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island",
+                "Quebec", "Saskatchewan"
+            });
 
             ViewBag.Hotels = new SelectList(new[]
             {
-        "Confort Inn", "Best Western", "Marriott", "Hilton"
-    });
+                "Confort Inn", "Best Western", "Marriott", "Hilton"
+            });
 
             ViewBag.Guests = new SelectList(new[]
             {
-        "1", "2", "3", "4"
-    });
+                "1", "2", "3", "4"
+            });
 
-            return View("Hotel"); // Pass the model and ViewBag data to the view
+            return View("Hotel");
         }
-
-
 
         [HttpPost]
         public ActionResult BookHotel(HotelBookingModel model)
         {
             if (ModelState.IsValid)
             {
-                // Here you would typically handle the submission (e.g., save to database, send email) and then redirect to the confirmation page
+               
                 return RedirectToAction("HotelConfirmation", "Booking", model);
             }
 
-            // If model state is not valid, return to the hotel booking page with validation errors
+            ViewBag.Provinces = new SelectList(new[]
+            {
+                "Alberta", "British Columbia", "Manitoba", "New Brunswick",
+                "Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island",
+                "Quebec", "Saskatchewan"
+            });
+
+            ViewBag.Hotels = new SelectList(new[]
+            {
+                "Confort Inn", "Best Western", "Marriott", "Hilton"
+            });
+
+            ViewBag.Guests = new SelectList(new[]
+            {
+                "1", "2", "3", "4"
+            });
+
             return View("Hotel", model);
         }
 
@@ -98,5 +138,6 @@ namespace WebApplication4.Controllers
         {
             return View(model);
         }
+
     }
 }

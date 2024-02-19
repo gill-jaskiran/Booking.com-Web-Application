@@ -4,6 +4,8 @@ namespace WebApplication4.Models
 {
     public class CarRentalModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "First Name is required")]
         public string FirstName { get; set; }
 

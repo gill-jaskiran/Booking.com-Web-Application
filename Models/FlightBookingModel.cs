@@ -5,6 +5,8 @@ namespace WebApplication4.Models
 {
     public class FlightBookingModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "First Name is required")]
         public string FirstName { get; set; }
 
@@ -13,7 +15,7 @@ namespace WebApplication4.Models
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
-        public string Email { get; set; } 
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "Location is required")]
         public string Location { get; set; }
@@ -25,8 +27,5 @@ namespace WebApplication4.Models
         [Required(ErrorMessage = "Arrival Date is required")]
         [DataType(DataType.Date)]
         public DateTime ArrivalDate { get; set; }
-
-        [Required(ErrorMessage = "Destination is required")]
-        public string Destination { get; set; }
     }
 }

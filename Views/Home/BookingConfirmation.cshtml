@@ -1,9 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model WebApplication4.Models.FlightBookingModel
+﻿@model WebApplication4.Models.FlightBookingModel
 
 <!DOCTYPE html>
 <html>
@@ -17,7 +12,7 @@
     <p>First Name: @Model.FirstName</p>
     <p>Last Name: @Model.LastName</p>
     <p>Email: @Model.Email</p>
-    <p>Destination: @Model.Destination</p>
+    <p>Location: @TempData["SelectedLocation"]</p> <!-- Display the selected location -->
     <p>Departure Date: @Model.DepartureDate.ToShortDateString()</p>
     <p>Arrival Date: @Model.ArrivalDate.ToShortDateString()</p>
 </body>
