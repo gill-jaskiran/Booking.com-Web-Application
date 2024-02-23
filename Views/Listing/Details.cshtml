@@ -1,0 +1,60 @@
+﻿@model WebApplication4.Models.Listing
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Listing</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Delete" asp-route-id="@Model?.ListingId">Delete</a> |
+    <a asp-action="Index">Back to Listings</a>
+
+    @if (Model != null)
+    {
+        <a asp-action="Details" asp-route-id="@Model.ListingId" class="btn btn-info">Details</a>
+        @if (Model.Type == "Car")
+        {
+            <a asp-controller="Booking" asp-action="CarRental" class="btn btn-info">Book now!</a>
+        }
+        else if (Model.Type == "Hotel")
+        {
+            <a asp-controller="Booking" asp-action="Hotel" class="btn btn-info">Book now!</a>
+        }
+        else if (Model.Type == "Flight")
+        {
+            <a asp-controller="Home" asp-action="Flight" class="btn btn-info">Book now!</a>
+        }
+    }
+</div>

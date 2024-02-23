@@ -1,0 +1,95 @@
+﻿@model List<Listing>
+@{
+	ViewData["Title"] = "Listings";
+}
+
+<h2>Listings</h2>
+
+<form method="get" action="@Url.Action("Index")">
+	<div class="form-group">
+		<label for="searchName">Search by Name:</label>
+		<input type="text" id="searchName" name="searchName" class="form-control" />
+
+		<label for="filterType">Filter by Type:</label>
+		<select id="filterType" name="filterType" class="form-control">
+			<option value="">All Types</option>
+			<option value="Car">Car</option>
+			<option value="Hotel">Hotel</option>
+			<option value="Flight">Flight</option>
+		</select>
+	</div>
+	<button type="submit" class="btn btn-primary">Search</button>
+	<a href="@Url.Action("Index")" class="btn btn-secondary">Reset</a>
+</form>
+
+@if (Model.Any())
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Type</th>
+
+				<th>Name</th>
+
+				<th>Price</th>
+
+				<th>Actions</th>
+		</thead>
+
+		<tbody>
+			@foreach (var listing in Model)
+			{
+				<tr>
+					<td>
+						@listing.Type
+					</td>
+					<td>
+						@listing.Name
+					</td>
+					<td>
+						@{
+							string priceLabel = "";
+							if (listing.Type == "Car" || listing.Type == "Hotel")
+							{
+								priceLabel = "Price per day: ";
+							}
+							else if (listing.Type == "Flight")
+							{
+								priceLabel = "Round trip: ";
+							}
+							<span>@priceLabel</span>
+
+							@listing.Price.ToString("C")
+						}
+					</td>
+
+					<td>
+						<a asp-action="Details" asp-route-id="@listing.ListingId" class="btn btn-info">Details</a>
+						@if (listing.Type == "Car")
+						{
+							<a asp-controller="Booking" asp-action="CarRental" class="btn btn-info">Book now!</a>
+						}
+						else if (listing.Type == "Hotel")
+						{
+							<a asp-controller="Booking" asp-action="Hotel" class="btn btn-info">Book now!</a>
+
+						}
+						else if (listing.Type == "Flight")
+						{
+							<a asp-controller="Home" asp-action="Flight" class="btn btn-info">Book now!</a>
+						}
+
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<p>No Listings Available</p>
+}
+
+<p>
+	<a class="nav-link text-dark" asp-area="" asp-controller="Listing" asp-action="Create" class="btn btn-check"> Create Listing</a>
+</p>
