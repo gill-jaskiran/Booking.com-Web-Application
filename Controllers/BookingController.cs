@@ -15,40 +15,41 @@ namespace WebApplication4.Controllers
 			_db = db;
 
 		}
-		public ActionResult Flight()
-		{
-			ViewBag.Provinces = new SelectList(new[]
-			{
-				"Alberta", "British Columbia", "Manitoba", "New Brunswick",
-				"Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island",
-				"Quebec", "Saskatchewan"
-			});
-			return View();
-		}
+        public ActionResult Flight()
+        {
+            ViewBag.Provinces = new SelectList(new[]
+            {
+                "Alberta", "British Columbia", "Manitoba", "New Brunswick",
+                "Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island",
+                "Quebec", "Saskatchewan"
+            });
+            return View();
+        }
 
-		[HttpPost]
-		public ActionResult BookFlight(FlightBookingModel model)
-		{
-			if (ModelState.IsValid)
-			{
+        [HttpPost]
+        public ActionResult BookFlight(FlightBookingModel model)
+        {
+            if (ModelState.IsValid)
+            {
 
-				model.Location = Request.Form["Location"].ToString();
+                model.Location = Request.Form["Location"].ToString();
 
 
 
-				return RedirectToAction("BookingConfirmation", "Home", model);
-			}
+                return RedirectToAction("BookingConfirmation", "Home", model);
+            }
 
-			ViewBag.Provinces = new SelectList(new[]
-			{
-				"Alberta", "British Columbia", "Manitoba", "New Brunswick",
-				"Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island",
-				"Quebec", "Saskatchewan"
-			});
-			return View("Flight", model);
-		}
+            ViewBag.Provinces = new SelectList(new[]
+            {
+                "Alberta", "British Columbia", "Manitoba", "New Brunswick",
+                "Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island",
+                "Quebec", "Saskatchewan"
+            });
+            return View("Flight", model);
+        }
 
-		public ActionResult CarRental()
+
+        public ActionResult CarRental()
 		{
 			var carRentals = _db.Listings.Where(l => l.Type == "Car").ToList();
 
@@ -67,7 +68,12 @@ namespace WebApplication4.Controllers
 				return RedirectToAction("CarRentalConfirmation", "Booking", model);
 			}
 
-			return View("CarRental", model);
+            var carRentals = _db.Listings.Where(l => l.Type == "Car").ToList();
+            ViewBag.CarModels = new SelectList(carRentals.Select(l => l.Name).Distinct());
+
+         
+
+            return View("CarRental", model);
 		}
 
 		public ActionResult CarRentalConfirmation(CarRentalModel model)

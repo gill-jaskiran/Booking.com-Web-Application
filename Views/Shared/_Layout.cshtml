@@ -3,11 +3,41 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebApplication4</title>
+    <title>@ViewData["Title"] - Bookings.ca</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApplication4.styles.css" asp-append-version="true" />
+
+    <style>
+        /* Navbar styles */
+        .navbar {
+            background-color: #B3DEE5 !important;
+        }
+
+        .navbar-nav a:hover {
+            background-color: #F2EBE5;
+            color: black;
+        }
+
+        /* Body styles */
+        body {
+            background: linear-gradient(to bottom, #B3DEE9, #ffffff);
+        }
+
+
+        /* Footer styles */
+        footer {
+            background-color: #B3DEE5;
+            color: black;
+        }
+
+        .main-content-wrapper {
+            background-color: #B3DEE5;
+            padding: 30px;
+        }
+    </style>
 </head>
+<script src="https://kit.fontawesome.com/9d60d8e31a.js" crossorigin="anonymous"></script>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -23,19 +53,18 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Listing" asp-action="Index">Listings</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Listing" asp-action="Index"><i class="fa-solid fa-magnifying-glass"></i> Listings</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Flight">Flights</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Flight"><i class="fa-solid fa-plane"></i> Flights</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="CarRental">Car Rental</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="CarRental"><i class="fa-solid fa-car"></i> Car Rental</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="Hotel">Hotels</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="Hotel"><i class="fa-solid fa-hotel"></i> Hotels</a>
                         </li>
                     </ul>
                 </div>
@@ -43,14 +72,16 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        <div class="main-content-wrapper">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - Bookings.ca - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - Bookings.ca - <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -59,3 +90,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
