@@ -43,7 +43,7 @@
 
     @if (Model != null)
     {
-        <a asp-action="Details" asp-route-id="@Model.ListingId" class="btn btn-info">Details</a>
+        
         @if (Model.Type == "Car")
         {
             <a asp-controller="Booking" asp-action="CarRental" class="btn btn-info">Book now!</a>

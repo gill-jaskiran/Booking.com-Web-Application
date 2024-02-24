@@ -16,7 +16,7 @@ namespace WebApplication4.Controllers
 		[HttpGet]
 		public IActionResult Index(string searchName, string filterType)
 		{
-			// Your existing logic to retrieve all listings
+			// Logic to retrieve all listings
 			var listings = _db.Listings.ToList();
 
 			// Apply search by name
