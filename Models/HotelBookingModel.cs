@@ -22,7 +22,15 @@ namespace WebApplication4.Models
 		[Required(ErrorMessage = "Hotel is required")]
 		public string Hotel { get; set; }
 
-		[Required(ErrorMessage = "Guests per room is required")]
+        [Required(ErrorMessage = "Check-In Date is required")]
+        [DataType(DataType.Date)]
+        public DateTime CheckIn { get; set; }
+
+        [Required(ErrorMessage = "Check-Out Date is required")]
+        [DataType(DataType.Date)]
+        public DateTime CheckOut { get; set; }
+
+        [Required(ErrorMessage = "Guests per room is required")]
 		public int GuestsPerRoom { get; set; }
 	}
 }
