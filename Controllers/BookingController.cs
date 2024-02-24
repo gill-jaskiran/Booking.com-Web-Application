@@ -144,7 +144,7 @@ namespace WebApplication4.Controllers
 
 
 
-        [HttpPost]
+        [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(FlightBookingModel Flight)
         {
@@ -152,7 +152,7 @@ namespace WebApplication4.Controllers
             {
                 _db.FlightBookings.Add(Flight);
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("BookingConfirmation", "Home", Flight);
             }
             return View(Flight);
         }
