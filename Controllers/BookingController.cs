@@ -190,6 +190,109 @@ namespace WebApplication4.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return NotFound();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create1(CarRentalModel Car)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.CarRentals.Add(Car);
+                _db.SaveChanges();
+                return RedirectToAction("CarRentalConfirmation", "Booking", Car);
             }
+            return View(CarRental);
+        }
+        [HttpGet]
+        public IActionResult Edit1(int id)
+        {
+            var project = _db.CarRentals.Find(id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+            return View(project);
+        }
+
+        [HttpGet]
+        public IActionResult Delete1(int id)
+        {
+            var listing = _db.CarRentals.FirstOrDefault(p => p.Id == id);
+            if (listing == null)
+            {
+                return NotFound();
+            }
+            return View(CarRental);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed1(int Id)
+        {
+            var CarRental = _db.CarRentals.Find(Id);
+            if (CarRental != null)
+            {
+                _db.CarRentals.Remove(CarRental);
+                _db.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return NotFound();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateBookHotel(HotelBookingModel Hotel)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.HotelBookings.Add(Hotel);
+                _db.SaveChanges();
+                return RedirectToAction("HotelConfirmation", "Booking", Hotel);
+            }
+            return View(Hotel);
+        }
+
+
+        [HttpGet]
+        public IActionResult EditHotel(int id)
+        {
+            var project = _db.HotelBookings.Find(id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+            return View(project);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteHotel(int id)
+        {
+            var listing = _db.HotelBookings.FirstOrDefault(p => p.Id == id);
+            if (listing == null)
+            {
+                return NotFound();
+            }
+            return View(Hotel);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmedHotel(int HotelID)
+        {
+            var Hotel = _db.HotelBookings.Find(HotelID);
+            if (Hotel != null)
+            {
+                _db.HotelBookings.Remove(Hotel);
+                _db.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return NotFound();
+        }
+
+
     }
 }
+    
