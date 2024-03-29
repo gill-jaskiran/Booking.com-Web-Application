@@ -17,4 +17,3 @@ namespace WebApplication4.Data
         public DbSet<Listing> Listings { get; set; }
     }
 }
-

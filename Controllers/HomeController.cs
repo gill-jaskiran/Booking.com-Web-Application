@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
@@ -5,6 +6,7 @@ using WebApplication4.Models;
 
 namespace WebApplication4.Controllers
 {
+	/*[Authorize(Roles = "Admin")]*/
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
@@ -19,7 +21,8 @@ namespace WebApplication4.Controllers
 			return View();
 		}
 
-		public IActionResult Privacy()
+        /*[Authorize(Roles = "Admin")]*/
+        public IActionResult Privacy()
 		{
 			return View();
 		}

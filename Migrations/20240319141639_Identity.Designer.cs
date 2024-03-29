@@ -12,7 +12,7 @@ using WebApplication4.Data;
 namespace WebApplication4.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240319141749_Identity")]
+    [Migration("20240319141639_Identity")]
     partial class Identity
     {
         /// <inheritdoc />
