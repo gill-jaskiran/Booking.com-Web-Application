@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication4.Data;
 using WebApplication4.Models;
@@ -47,7 +48,8 @@ namespace WebApplication4.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Create()
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create()
 		{
 			return View();
 		}
@@ -55,7 +57,8 @@ namespace WebApplication4.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Create(Listing listing)
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create(Listing listing)
 		{
 			if (ModelState.IsValid)
 			{
@@ -115,7 +118,8 @@ namespace WebApplication4.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Delete(int id)
+        [Authorize(Roles = "Admin")]
+        public IActionResult Delete(int id)
 		{
 			var listing = _db.Listings.FirstOrDefault(p => p.ListingId == id);
 			if (listing == null)
