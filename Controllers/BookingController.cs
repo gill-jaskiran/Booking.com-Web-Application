@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using WebApplication4.Data;
 using WebApplication4.Models;
 
@@ -132,6 +133,7 @@ namespace WebApplication4.Controllers
             return View("Hotel", model);
         }
 
+
         public ActionResult HotelConfirmation(HotelBookingModel model)
         {
             return View(model);
@@ -193,18 +195,22 @@ namespace WebApplication4.Controllers
         }
 
 
+ // AJAX
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create1(CarRentalModel Car)
+        public IActionResult Create1(CarRentalModel carRentalModel)
         {
             if (ModelState.IsValid)
             {
-                _db.CarRentals.Add(Car);
+                _db.CarRentals.Add(carRentalModel);
                 _db.SaveChanges();
-                return RedirectToAction("CarRentalConfirmation", "Booking", Car);
+
+                return PartialView("_CarRentalConfirmationPartial", carRentalModel);
             }
-            return View(CarRental);
+
+            return View("CarRental", carRentalModel);
         }
+
         [HttpGet]
         public IActionResult Edit1(int id)
         {

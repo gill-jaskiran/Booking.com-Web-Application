@@ -14,29 +14,35 @@ namespace WebApplication4.Controllers
 		{
 			_db = db;
 		}
-		[HttpGet]
-		public IActionResult Index(string searchName, string filterType)
-		{
-			// Logic to retrieve all listings
-			var listings = _db.Listings.ToList();
-
-			// Apply search by name
-			if (!string.IsNullOrEmpty(searchName))
-			{
-				listings = listings.Where(l => l.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase)).ToList();
-			}
-
-			// Apply filter by type
-			if (!string.IsNullOrEmpty(filterType))
-			{
-				listings = listings.Where(l => l.Type == filterType).ToList();
-			}
-
-			return View(listings);
-		}
 
 
-		[HttpGet]
+        [HttpGet]
+        public IActionResult Index(string searchName, string filterType)
+        {
+            var listings = _db.Listings.ToList();
+
+            // Apply search by name
+            if (!string.IsNullOrEmpty(searchName))
+            {
+                listings = listings.Where(l => l.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            // Apply filter by type
+            if (!string.IsNullOrEmpty(filterType))
+            {
+                listings = listings.Where(l => l.Type == filterType).ToList();
+            }
+
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                // AJAX Request
+                return PartialView("_ListingsPartial", listings);
+            }
+
+            return View(listings); // non-AJAX request it will return full view
+        }
+
+        [HttpGet]
 		public IActionResult Details(int id)
 		{
 			var project = _db.Listings.SingleOrDefault(p => p.ListingId == id);
@@ -142,6 +148,8 @@ namespace WebApplication4.Controllers
 			}
 			return NotFound();
 		}
-	}
+
+       
+    }
 }
 

@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model WebApplication4.Models.CarRentalModel
+
+<p>Dear @Model.FirstName @Model.LastName, your car has been successfully rented. Check your email for further details.</p>
+<h3>Rental Details:</h3>
+<p>First Name: @Model.FirstName</p>
+<p>Last Name: @Model.LastName</p>
+<p>Email: @Model.Email</p>
+<p>Car Model: @Model.CarModel</p>
+<p>Rental Start Date: @Model.RentalStartDate.ToShortDateString()</p>
+<p>Rental End Date: @Model.RentalEndDate.ToShortDateString()</p>

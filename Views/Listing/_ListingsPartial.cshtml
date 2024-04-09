@@ -1,0 +1,63 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Listing>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var listing in Model)
+            {
+                <tr>
+                    <td>@listing.Type</td>
+                    <td>@listing.Name</td>
+                    <td>
+                        @{
+                            string priceLabel = "";
+                            if (listing.Type == "Car" || listing.Type == "Hotel")
+                            {
+                                priceLabel = "Price per day: ";
+                            }
+                            else if (listing.Type == "Flight")
+                            {
+                                priceLabel = "Round trip: ";
+                            }
+                        }
+                        <span>@priceLabel</span>
+                        @listing.Price.ToString("C")
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@listing.ListingId" class="btn btn-info">Details</a>
+                        @if (listing.Type == "Car")
+                        {
+                            <a asp-controller="Booking" asp-action="CarRental" class="btn btn-info">Book now!</a>
+                        }
+                        else if (listing.Type == "Hotel")
+                        {
+                            <a asp-controller="Booking" asp-action="Hotel" class="btn btn-info">Book now!</a>
+                        }
+                        else if (listing.Type == "Flight")
+                        {
+                            <a asp-controller="Home" asp-action="Flight" class="btn btn-info">Book now!</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No Listings Available</p>
+}
