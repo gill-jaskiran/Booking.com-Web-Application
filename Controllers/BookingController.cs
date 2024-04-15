@@ -217,7 +217,7 @@ namespace WebApplication4.Controllers
         }
 
 
- // AJAX
+ // AJAX used for this model
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create1(CarRentalModel carRentalModel)
@@ -227,7 +227,7 @@ namespace WebApplication4.Controllers
                 _db.CarRentals.Add(carRentalModel);
                 _db.SaveChanges();
 
-                return PartialView("_CarRentalConfirmationPartial", carRentalModel);
+                return PartialView("_CarRentalConfirmationPartial", carRentalModel); // will return partial view
             }
 
             return View("CarRental", carRentalModel);

@@ -35,11 +35,11 @@ namespace WebApplication4.Controllers
 
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
-                // AJAX Request
+                // AJAX Request will return partial veiw
                 return PartialView("_ListingsPartial", listings);
             }
 
-            return View(listings); // non-AJAX request it will return full view
+            return View(listings); 
         }
 
         [HttpGet]
