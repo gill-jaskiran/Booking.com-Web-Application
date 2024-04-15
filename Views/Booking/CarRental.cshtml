@@ -60,19 +60,19 @@
     $(document).ready(function () {
         $('#carRentalFormAjax').submit(function (e) {
             e.preventDefault(); // Prevent regular form submission
-            var formData = $(this).serialize();
+            var formData = $(this).serialize(); // serialize prepares input for ajax
 
             $('#loader').show();// Displays Spinner
 
             $.ajax({ // will send a ajax request
-                url: $(this).attr('action'),
+                url: $(this).attr('action'), 
                 type: $(this).attr('method'),
                 data: formData,
-                success: function (result) { // This dunction will be called if the request goes through
-                    $('#carRentalForm').html(result);
+                success: function (result) { // This function will be called if the request goes through
+                    $('#carRentalForm').html(result); // Form is loaded
                 },
                 error: function (xhr, status, error) { // Errors handling if request fails
-                    console.error(xhr.responseText);
+                    console.error(xhr.responseText); 
                 },
                 complete: function () {
                     $('#loader').hide(); // Spinner is hidden once request is processed

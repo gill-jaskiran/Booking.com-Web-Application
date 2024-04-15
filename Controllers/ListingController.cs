@@ -33,9 +33,10 @@ namespace WebApplication4.Controllers
                 listings = listings.Where(l => l.Type == filterType).ToList();
             }
 
-            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest") // sees if its a ajax request
             {
                 // AJAX Request will return partial veiw
+                
                 return PartialView("_ListingsPartial", listings);
             }
 

@@ -5,6 +5,8 @@
 }
 @model List<Listing>
 
+<div id="loader" style="display: none;">
+</div>
 @if (Model.Any())
 {
     <table class="table">
@@ -60,4 +62,26 @@
 else
 {
     <p>No Listings Available</p>
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#searchForm').submit(function (e) {
+                e.preventDefault();
+                $('#loader').show(); // Show loader spinner
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function (data) {
+                        $('#searchResultsContainer').html(data); // Update search results container
+                    },
+                    complete: function () {
+                        $('#loader').hide(); // Hide loader spinner
+                    }
+                });
+            });
+        });
+    </script>
 }
