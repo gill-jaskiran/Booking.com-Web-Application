@@ -11,6 +11,7 @@ namespace WebApplication4.Data
         {
         }
 
+        
         public DbSet<HotelBookingModel> HotelBookings { get; set; }
         public DbSet<FlightBookingModel> FlightBookings { get; set; }
         public DbSet<CarRentalModel> CarRentals { get; set; }

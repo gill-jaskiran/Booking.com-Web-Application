@@ -42,7 +42,7 @@ namespace WebApplication4.Controllers
             return View(listings); 
         }
 
-        [HttpGet]
+        [HttpGet("Details/{id}")]
 		public IActionResult Details(int id)
 		{
 			var project = _db.Listings.SingleOrDefault(p => p.ListingId == id);
