@@ -144,32 +144,54 @@ namespace WebApplication4.Controllers
             return View();
         }
 
+        //-------------------
+
+		[HttpPost, ActionName("Create")]
+		[ValidateAntiForgeryToken]
+		public IActionResult Create(FlightBookingModel Flight)
+		{
+			try
+			{
+				if (ModelState.IsValid)
+				{
+					_db.FlightBookings.Add(Flight);
+					_db.SaveChanges();
+					return RedirectToAction("BookingConfirmation", "Home", Flight);
+				}
+				return View(Flight);
+			}
+			catch (Exception ex)
+			{
+				// Log the exception for debugging purposes
+				
+				Console.WriteLine("An error occurred while trying to book a Flight" + ex.Message);
+
+				return RedirectToAction("Error", "Home");
+			}
+		}
+		[HttpGet]
+		public IActionResult Edit(int id)
+		{
+			try
+			{
+				var project = _db.FlightBookings.Find(id);
+				if (project == null)
+				{
+					return NotFound();
+				}
+				return View(project);
+			}
+			catch (Exception ex)
+			{
+
+				Console.WriteLine("An error occurred while trying to edit a Flight booking" + ex.Message);
+
+				return RedirectToAction("Error", "Home");
+			}
+		}
 
 
-        [HttpPost, ActionName("Create")]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(FlightBookingModel Flight)
-        {
-            if (ModelState.IsValid)
-            {
-                _db.FlightBookings.Add(Flight);
-                _db.SaveChanges();
-                return RedirectToAction("BookingConfirmation", "Home", Flight);
-            }
-            return View(Flight);
-        }
-        [HttpGet]
-        public IActionResult Edit(int id)
-        {
-            var project = _db.FlightBookings.Find(id);
-            if (project == null)
-            {
-                return NotFound();
-            }
-            return View(project);
-        }
-
-        [HttpGet]
+		[HttpGet]
         public IActionResult Delete(int id)
         {
             var listing = _db.FlightBookings.FirstOrDefault(p => p.Id == id);

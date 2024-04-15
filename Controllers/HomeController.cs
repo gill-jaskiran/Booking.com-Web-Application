@@ -21,8 +21,8 @@ namespace WebApplication4.Controllers
 			return View();
 		}
 
-        /*[Authorize(Roles = "Admin")]*/
-        public IActionResult Privacy()
+		/*[Authorize(Roles = "Admin")]*/
+		public IActionResult Privacy()
 		{
 			return View();
 		}
@@ -51,9 +51,27 @@ namespace WebApplication4.Controllers
 
 		}
 
+		public IActionResult NotFound(int statusCode)
+		{
+			if (statusCode == 404)
+			{
+				return View("NotFound");
+			}
+			return View("Error");
+		}
+
+        public IActionResult InternalServerError(int statusCode)
+        {
+            if (statusCode == 500)
+            {
+                return View("InternalServerError");
+            }
+            return View("Error");
+        }
 
 
-	}
+
+    }
 
 
 }

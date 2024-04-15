@@ -21,8 +21,6 @@ namespace WebApplication4
                 .AddRoles<IdentityRole>() // Adding roles
                 .AddEntityFrameworkStores<AppDbContext>();
 
-
-
             builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
             var app = builder.Build();
@@ -30,17 +28,47 @@ namespace WebApplication4
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
+                
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+
                 app.UseHsts();
+            }
+            else
+            {
+                // Development environment settings
+                app.UseDeveloperExceptionPage();
             }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            //custome error pages for 404 and 500
+            app.UseStatusCodePagesWithRedirects("/Home/NotFound?statusCode={0}");
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // Logging unhandled exceptions
+            app.Use(async (context, next) =>
+            {
+                try
+                {
+                    await next();
+                }
+                catch (Exception ex)
+                {
+                    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An unhandled exception occurred.");
+                    context.Response.Redirect("/Home/Error"); // Redirect to custom error page
+                }
+                finally
+                {
+                    // Log the response status after the request has been processed
+                    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+                    logger.LogInformation($"Response Status: {context.Response.StatusCode}");
+                }
+            });
+
             app.MapRazorPages();
 
             // Configure the route
@@ -49,57 +77,53 @@ namespace WebApplication4
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-
-
-            /*services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-            {
-                // Configure identity options if needed
-            })
-            .AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders(); ;*/
-
             using (var scope = app.Services.CreateScope())
             {
-
                 var RoleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                 var roles = new[] { "Admin", "User" };
-
+                // Implementing Try-Catch Blocks
                 foreach (var role in roles)
                 {
-                    if (!await RoleManager.RoleExistsAsync(role))
-                        await RoleManager.CreateAsync(new IdentityRole(role));
+                    try
+                    {
+                        if (!await RoleManager.RoleExistsAsync(role))
+                            await RoleManager.CreateAsync(new IdentityRole(role));
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle the exception locally and provide feedback
+                        Console.WriteLine($"An error occurred while creating role '{role}': {ex.Message}");
+                    }
                 }
-
-
             }
 
             using (var scope = app.Services.CreateScope())
             {
-
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
                 string email = "admin@gmail.com";
                 string password = "Admin123!";
-                
-
+                // Implementing Try-Catch Blocks
                 if (await userManager.FindByEmailAsync(email) == null)
                 {
                     var user = new IdentityUser();
                     user.UserName = email;
                     user.Email = email;
-                    
 
-                    await userManager.CreateAsync(user, password);
-
-                    await userManager.AddToRoleAsync(user, "Admin");
-
+                    try
+                    {
+                        await userManager.CreateAsync(user, password);
+                        await userManager.AddToRoleAsync(user, "Admin");
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle the exception locally and provide feedback
+                        Console.WriteLine($"An error occurred while creating admin user: {ex.Message}");
+                    }
                 }
-
-
-
             }
+
             app.Run();
         }
     }
 }
-
