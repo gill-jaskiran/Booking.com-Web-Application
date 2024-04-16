@@ -16,7 +16,7 @@ namespace WebApplication4.Controllers
 		}
 
 
-        [HttpGet]
+        [HttpGet("Index")]
         public IActionResult Index(string searchName, string filterType)
         {
             var listings = _db.Listings.ToList();
@@ -76,7 +76,7 @@ namespace WebApplication4.Controllers
 			return View(listing);
 		}
 
-		[HttpGet]
+		[HttpGet("Edit/{id}")]
 		public IActionResult Edit(int id)
 		{
 			var project = _db.Listings.Find(id);
