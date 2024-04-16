@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 using WebApplication4.Data;
 using WebApplication4.Models;
 
@@ -62,21 +64,29 @@ namespace WebApplication4.Controllers
 		}
 
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public IActionResult Create(Listing listing)
-		{
-			if (ModelState.IsValid)
-			{
-				_db.Listings.Add(listing);
-				_db.SaveChanges();
-				return RedirectToAction("Index");
-			}
-			return View(listing);
-		}
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _db.Listings.Add(listing);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(listing);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it accordingly
+                ModelState.AddModelError("", "An error occurred while creating the listing. Please try again later.");
+                return View(listing);
+            }
+        }
 
-		[HttpGet("Edit/{id}")]
+        [HttpGet("Edit/{id}")]
 		public IActionResult Edit(int id)
 		{
 			var project = _db.Listings.Find(id);

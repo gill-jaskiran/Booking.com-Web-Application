@@ -1,5 +1,11 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 using WebApplication4.Data;
 using WebApplication4.Migrations;
 using WebApplication4.Models;
@@ -43,7 +49,19 @@ namespace WebApplication4
             app.UseStaticFiles();
 
             //custome error pages for 404 and 500
-            app.UseStatusCodePagesWithRedirects("/Home/NotFound?statusCode={0}");
+            app.UseStatusCodePages(context =>
+            {
+                var statusCode = context.HttpContext.Response.StatusCode;
+                if (statusCode == 404)
+                {
+                    context.HttpContext.Response.Redirect("/Home/NotFound?statusCode=404");
+                }
+                else if (statusCode == 500)
+                {
+                    context.HttpContext.Response.Redirect("/Home/InternalServerError?statusCode=500");
+                }
+                return Task.CompletedTask;
+            });
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
